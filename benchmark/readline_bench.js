@@ -3,7 +3,7 @@ var readline = require('readline')
 var generateFile = require('../test/generate_file')
 var coReadline = require('..')
 var co = require('co')
-var Promise = require('bluebird')
+var bluebird = require('bluebird')
 
 suite('readline_bench', function () {
 
@@ -15,8 +15,14 @@ suite('readline_bench', function () {
     generateFile.clear();
   })
 
-  bench('new Promise', function () {
+  bench('new native Promise', function () {
     new Promise(function (resolve, reject) {
+      resolve(true)
+    })
+  })
+
+  bench('new bluebird Promise', function () {
+    new bluebird(function (resolve, reject) {
       resolve(true)
     })
   })
