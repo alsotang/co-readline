@@ -45,3 +45,6 @@ jspm_packages
 
 # Yarn Integrity file
 .yarn-integrity
+
+
+test/files/1_million.txt
