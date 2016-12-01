@@ -5,4 +5,7 @@ all: test
 test:
 	DEBUG=co-readline ./node_modules/.bin/mocha -r should -r co-mocha $(TEST_FILES)
 
-.PHONY: all test
+bench:
+	./node_modules/.bin/matcha benchmark/readline_bench.js
+
+.PHONY: all test bench
