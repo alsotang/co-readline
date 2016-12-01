@@ -7,6 +7,7 @@ var Promise = require('bluebird')
 
 
 var NORMAL_FILE_PATH = pathLib.join(__dirname, '../files/normal_little.txt')
+var NOT_EXIST_FILE_PATH = pathLib.join(__dirname, '../files/not_exist.txt')
 
 describe('test/lib/co_readline.test.js', function() {
   this.timeout(msLib('10s'))
@@ -72,5 +73,13 @@ describe('test/lib/co_readline.test.js', function() {
     yield Promise.delay(20)
 
     rl.bufferLines.length.should.equal(lineLength);
+  })
+
+  it('should throw when file path not exists', function *() {
+    try {
+      var rl = new coReadline.File(NOT_EXIST_FILE_PATH)
+    } catch (e) {
+      e.code.should.equal('ENOENT')
+    }
   })
 })
