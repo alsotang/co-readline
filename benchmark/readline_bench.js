@@ -27,6 +27,17 @@ suite('readline_bench', function () {
     })
   })
 
+  bench('yield Promise.resolve(1)', function (next) {
+    co(function *() {
+      yield Promise.resolve(1)
+      next()
+    })
+  })
+
+  bench('setImmediate', function (next) {
+    setImmediate(next)
+  })
+
   bench('fs.readFileSync', function() {
     fs.readFileSync(generateFile.filepath.filePath1Million, 'utf-8').split('\n')
   });
