@@ -3,6 +3,7 @@ var readline = require('readline')
 var generateFile = require('../test/generate_file')
 var coReadline = require('..')
 var co = require('co')
+var Promise = require('bluebird')
 
 suite('readline_bench', function () {
 
@@ -12,6 +13,12 @@ suite('readline_bench', function () {
 
   after(function () {
     generateFile.clear();
+  })
+
+  bench('new Promise', function () {
+    new Promise(function (resolve, reject) {
+      resolve(true)
+    })
   })
 
   bench('fs.readFileSync', function() {
