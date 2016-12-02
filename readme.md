@@ -14,7 +14,9 @@ Read a file line by line in generator/co style
 
 ## todo
 
+* add istanbul
 * add travis test
 * complete package.json info
 * complate readme.md
 * publish to npm
+* add File.prototype.gen
