@@ -45,6 +45,40 @@ describe('test/lib/co_readline.test.js', function() {
     fileContent.should.equal(lines.join('\n'))
   })
 
+  it('.gen should read NORMAL_FILE_PATH', function * () {
+    var rl = new coReadline.File(NORMAL_FILE_PATH)
+    var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
+
+    var lines = []
+
+    for (var line of rl.gen()) {
+      if (line.then) {
+        line = yield line;
+      }
+
+      lines.push(line)
+    }
+
+    fileContent.should.equal(lines.join('\n'))
+  })
+
+  it('.open should read NORMAL_FILE_PATH', function * () {
+    var rlGen = coReadline(NORMAL_FILE_PATH)
+    var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
+
+    var lines = []
+
+    for (var line of rlGen) {
+      if (line.then) {
+        line = yield line;
+      }
+
+      lines.push(line)
+    }
+
+    fileContent.should.equal(lines.join('\n'))
+  })
+
   it('should throw when after EOF', function * () {
     var rl = new coReadline.File(NORMAL_FILE_PATH)
 
