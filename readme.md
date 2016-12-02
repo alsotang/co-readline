@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/alsotang/co-readline/branch/master/graph/badge.svg)](https://codecov.io/gh/alsotang/co-readline)
 
 
-Read a file line by line in generator/co style
+Read a file line by line in generator/co style.
 
 ## install
 
@@ -47,6 +47,4 @@ About 1/3 speed of build-in `readline` module
 
 About 1/6 speed of `fs.readFileSync`
 
-## todo
-
-* publish to npm
+Read about 1 million lines per second
