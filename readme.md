@@ -2,6 +2,9 @@
 
 [![Build Status](https://travis-ci.org/alsotang/co-readline.svg?branch=master)](https://travis-ci.org/alsotang/co-readline)
 
+[![codecov](https://codecov.io/gh/alsotang/co-readline/branch/master/graph/badge.svg)](https://codecov.io/gh/alsotang/co-readline)
+
+
 Read a file line by line in generator/co style
 
 ## install
