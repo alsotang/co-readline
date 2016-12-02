@@ -1,5 +1,7 @@
 # co-readline
 
+[![Build Status](https://travis-ci.org/alsotang/co-readline.svg?branch=master)](https://travis-ci.org/alsotang/co-readline)
+
 Read a file line by line in generator/co style
 
 ## install
