@@ -24,7 +24,7 @@ describe('test/lib/co_readline.test.js', function() {
     (yield Promise.resolve(true)).should.true()
   }))
 
-  it('should read NORMAL_FILE_PATH', co.wrap(function * () {
+  it('.readline should read NORMAL_FILE_PATH', co.wrap(function * () {
     var rl = coReadline.File(NORMAL_FILE_PATH)
     var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
 
