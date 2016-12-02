@@ -65,18 +65,17 @@ describe('test/lib/co_readline.test.js', function() {
 
   it('.open should read NORMAL_FILE_PATH', co.wrap(function * () {
     var rlGen = coReadline(NORMAL_FILE_PATH)
-    var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
-
     var lines = []
 
     for (var line of rlGen) {
       if (line.then) {
-        line = yield line;
+        line = yield line; // `line` could be Promise or String
       }
 
       lines.push(line)
     }
 
+    var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
     fileContent.should.equal(lines.join('\n'))
   }))
 
