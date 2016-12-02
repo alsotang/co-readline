@@ -58,10 +58,14 @@ suite('readline_bench', function () {
       var rl = new coReadline.File(generateFile.filepath.filePath1Million)
 
       while (true) {
-        var line = yield rl.readline()
+        var line = rl.readline()
 
         if (line == coReadline.EOF) {
           break;
+        }
+        
+        if (line.then) {
+          line = yield line
         }
       }
     }).then(function () {

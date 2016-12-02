@@ -45,6 +45,26 @@ describe('test/lib/co_readline.test.js', function() {
     fileContent.should.equal(lines.join('\n'))
   })
 
+  it('should throw when after EOF', function * () {
+    var rl = new coReadline.File(NORMAL_FILE_PATH)
+
+    while (true) {
+      var line = rl.readline()
+
+      if (line == coReadline.EOF) {
+        break;
+      }
+
+      if (line.then) {
+        line = yield line
+      }
+    }
+
+    (function () {
+      rl.readline()
+    }).should.throw('cant not read a EOF file')
+  })
+
   it('should read 1 million lines file', function *() {
     var rl = new coReadline.File(generateFile.filepath.filePath1Million)
     var fileContent = yield fs.readFile(generateFile.filepath.filePath1Million, 'utf-8')
@@ -84,10 +104,10 @@ describe('test/lib/co_readline.test.js', function() {
   })
 
   it('should throw when file path not exists', function *() {
-    try {
+    (function () {
       var rl = new coReadline.File(NOT_EXIST_FILE_PATH)
-    } catch (e) {
-      e.code.should.equal('ENOENT')
-    }
+    }).should.throw({
+      code: 'ENOENT'
+    })
   })
 })
