@@ -8,7 +8,7 @@ test:
 test-debug:
 	DEBUG=co-readline ./node_modules/.bin/mocha --async-only -r should $(TEST_FILES)
 
-cov:
+cov test-cov:
 	./node_modules/.bin/istanbul cover _mocha -- --async-only -r should $(TEST_FILES)
 
 bench:
