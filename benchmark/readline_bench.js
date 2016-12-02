@@ -55,15 +55,9 @@ suite('readline_bench', function () {
   bench('co-readline', function (next) {
 
     co(function *() {
-      var rl = new coReadline.File(generateFile.filepath.filePath1Million)
+      var rlGen = coReadline(generateFile.filepath.filePath1Million)
 
-      while (true) {
-        var line = rl.readline()
-
-        if (line == coReadline.EOF) {
-          break;
-        }
-        
+      for (var line of rlGen) {
         if (line.then) {
           line = yield line
         }

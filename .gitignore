@@ -48,3 +48,5 @@ jspm_packages
 
 
 test/files/1_million.txt
+
+.DS_Store

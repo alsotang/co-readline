@@ -4,6 +4,7 @@ var fs = require('mz/fs')
 var generateFile = require('../generate_file')
 var msLib = require('ms')
 var Promise = require('bluebird')
+var co = require('co')
 
 
 var NORMAL_FILE_PATH = pathLib.join(__dirname, '../files/normal_little.txt')
@@ -19,12 +20,12 @@ describe('test/lib/co_readline.test.js', function() {
     generateFile.clear()
   })
 
-  it('should ok', function *() {
+  it('should ok', co.wrap(function *() {
     (yield Promise.resolve(true)).should.true()
-  })
+  }))
 
-  it('should read NORMAL_FILE_PATH', function * () {
-    var rl = new coReadline.File(NORMAL_FILE_PATH)
+  it('should read NORMAL_FILE_PATH', co.wrap(function * () {
+    var rl = coReadline.File(NORMAL_FILE_PATH)
     var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
 
     var lines = []
@@ -43,9 +44,9 @@ describe('test/lib/co_readline.test.js', function() {
     }
 
     fileContent.should.equal(lines.join('\n'))
-  })
+  }))
 
-  it('.gen should read NORMAL_FILE_PATH', function * () {
+  it('.gen should read NORMAL_FILE_PATH', co.wrap(function * () {
     var rl = new coReadline.File(NORMAL_FILE_PATH)
     var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
 
@@ -60,9 +61,9 @@ describe('test/lib/co_readline.test.js', function() {
     }
 
     fileContent.should.equal(lines.join('\n'))
-  })
+  }))
 
-  it('.open should read NORMAL_FILE_PATH', function * () {
+  it('.open should read NORMAL_FILE_PATH', co.wrap(function * () {
     var rlGen = coReadline(NORMAL_FILE_PATH)
     var fileContent = yield fs.readFile(NORMAL_FILE_PATH, 'utf-8')
 
@@ -77,9 +78,9 @@ describe('test/lib/co_readline.test.js', function() {
     }
 
     fileContent.should.equal(lines.join('\n'))
-  })
+  }))
 
-  it('should throw when after EOF', function * () {
+  it('should throw when after EOF', co.wrap(function * () {
     var rl = new coReadline.File(NORMAL_FILE_PATH)
 
     while (true) {
@@ -97,31 +98,25 @@ describe('test/lib/co_readline.test.js', function() {
     (function () {
       rl.readline()
     }).should.throw('cant not read a EOF file')
-  })
+  }))
 
-  it('should read 1 million lines file', function *() {
-    var rl = new coReadline.File(generateFile.filepath.filePath1Million)
+  it('should read 1 million lines file', co.wrap(function *() {
+    var rl = coReadline(generateFile.filepath.filePath1Million)
     var fileContent = yield fs.readFile(generateFile.filepath.filePath1Million, 'utf-8')
 
     var lines = []
-    while (true) {
-      var line = rl.readline()
 
-      if (line == coReadline.EOF) {
-        break;
-      }
-
+    for (var line of rl) {
       if (line.then) {
-        line = yield line
+        line = yield line;
       }
-
       lines.push(line)
     }
 
     fileContent.should.equal(lines.join('\n'))
-  })
+  }))
 
-  it('should stop when no one consume', function *() {
+  it('should stop when no one consume', co.wrap(function *() {
     var rl = new coReadline.File(generateFile.filepath.filePath1Million)
 
     yield Promise.delay(50)
@@ -135,13 +130,13 @@ describe('test/lib/co_readline.test.js', function() {
     yield Promise.delay(20)
 
     rl.bufferLines.length.should.equal(lineLength);
-  })
+  }))
 
-  it('should throw when file path not exists', function *() {
+  it('should throw when file path not exists', co.wrap(function *() {
     (function () {
       var rl = new coReadline.File(NOT_EXIST_FILE_PATH)
     }).should.throw({
       code: 'ENOENT'
     })
-  })
+  }))
 })
