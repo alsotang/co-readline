@@ -29,10 +29,14 @@ describe('test/lib/co_readline.test.js', function() {
 
     var lines = []
     while (true) {
-      var line = yield rl.readline()
+      var line = rl.readline()
 
       if (line == coReadline.EOF) {
         break;
+      }
+
+      if (line.then) {
+        line = yield line
       }
 
       lines.push(line)
@@ -47,10 +51,14 @@ describe('test/lib/co_readline.test.js', function() {
 
     var lines = []
     while (true) {
-      var line = yield rl.readline()
+      var line = rl.readline()
 
       if (line == coReadline.EOF) {
         break;
+      }
+
+      if (line.then) {
+        line = yield line
       }
 
       lines.push(line)
