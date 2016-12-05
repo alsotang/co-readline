@@ -1,24 +1,16 @@
 var coReadline = require('../..')
 var pathLib = require('path')
 var fs = require('mz/fs')
-var generateFile = require('../generate_file')
 var msLib = require('ms')
 var Promise = require('bluebird')
 var co = require('co')
-
+var generateFile = require('../generate_file')
 
 var NORMAL_FILE_PATH = pathLib.join(__dirname, '../files/normal_little.txt')
 var NOT_EXIST_FILE_PATH = pathLib.join(__dirname, '../files/not_exist.txt')
 
 describe('test/lib/co_readline.test.js', function() {
   this.timeout(msLib('10s'))
-
-  before(function () {
-    generateFile.generate()
-  })
-  after(function () {
-    generateFile.clear()
-  })
 
   it('should ok', co.wrap(function *() {
     (yield Promise.resolve(true)).should.true()
