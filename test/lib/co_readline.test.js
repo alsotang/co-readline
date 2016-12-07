@@ -107,7 +107,7 @@ describe('test/lib/co_readline.test.js', function() {
     fileContent.should.equal(lines.join('\n'))
   }))
 
-  it('should stop when no one consume', co.wrap(function *() {
+  it('should stop when no one consume, and start when some one comsume', co.wrap(function *() {
     var rl = new coReadline.File(generateFile.filepath.filePath1Million)
 
     yield Promise.delay(50)
@@ -121,6 +121,19 @@ describe('test/lib/co_readline.test.js', function() {
     yield Promise.delay(20)
 
     rl.bufferLines.length.should.equal(lineLength);
+
+    var resumeAgain = false;
+    rl.rlInstance.once('resume', function () {
+      resumeAgain = true;
+    })
+
+    for(var i = 0; i < lineLength + 1; i++) {
+      rl.readline()
+    }
+
+    yield Promise.delay(20)
+
+    resumeAgain.should.true()
   }))
 
   it('should throw when file path not exists', co.wrap(function *() {

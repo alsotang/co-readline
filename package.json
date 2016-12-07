@@ -1,6 +1,6 @@
 {
   "name": "co-readline",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Read a file line by line in generator/co style",
   "repository": "https://github.com/alsotang/co-readline",
   "main": "lib/co_readline.js",
